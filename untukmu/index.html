@@ -3,35 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animasi Bunga dan Teks</title>
+    <title>Animasi Bunga dengan Teks</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background: black;
-            color: white;
+            background: radial-gradient(circle, #001f3f, #001029);
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             height: 100vh;
-            overflow: hidden;
+            color: white;
         }
 
-        /* Animasi teks */
-        .typing-container {
+        /* Teks mengetik */
+        .typing-text {
             font-size: 24px;
             text-align: center;
+            margin-bottom: 20px;
             white-space: nowrap;
             overflow: hidden;
-            border-right: 3px solid white;
+            border-right: 2px solid white;
             width: 0;
-            animation: typing 4s steps(30) infinite, blink 0.5s step-end infinite;
+            animation: typing 5s steps(30, end), blink 0.7s step-end infinite alternate;
         }
 
         @keyframes typing {
-            0%, 100% {
+            0% {
                 width: 0;
             }
             50% {
@@ -40,8 +41,11 @@
         }
 
         @keyframes blink {
-            50% {
-                border-color: transparent;
+            from {
+                border-right-color: white;
+            }
+            to {
+                border-right-color: transparent;
             }
         }
 
@@ -49,105 +53,142 @@
         .flower-container {
             position: relative;
             width: 200px;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
+            height: 300px;
         }
 
         /* Batang bunga */
         .stem {
             position: absolute;
-            width: 10px;
-            height: 150px;
-            background: green;
             bottom: 0;
-            animation: grow 3s ease-out;
+            left: 50%;
+            width: 10px;
+            height: 0;
+            background: #228b22;
+            transform: translateX(-50%);
+            animation: growStem 3s ease forwards;
         }
 
         /* Daun */
         .leaf {
             position: absolute;
             width: 20px;
-            height: 40px;
-            background: green;
+            height: 50px;
+            background: #228b22;
             border-radius: 50%;
+            opacity: 0;
+            animation: growLeaf 3s ease forwards;
         }
 
         .leaf-left {
-            left: -20px;
+            bottom: 100px;
+            left: calc(50% - 30px);
             transform: rotate(-45deg);
+            animation-delay: 1s;
         }
 
         .leaf-right {
-            right: -20px;
+            bottom: 100px;
+            right: calc(50% - 30px);
             transform: rotate(45deg);
+            animation-delay: 1.5s;
         }
 
         /* Kelopak bunga */
         .petal {
             position: absolute;
             width: 40px;
-            height: 40px;
-            background: pink;
+            height: 60px;
+            background: #ff69b4;
             border-radius: 50%;
-            animation: sway 2s infinite alternate;
+            opacity: 0;
+            animation: growPetal 3s ease forwards;
         }
 
         .petal-top {
-            top: -50px;
-            left: 10px;
+            top: 0;
+            left: calc(50% - 20px);
         }
 
-        .petal-bottom-left {
-            top: -25px;
-            left: -30px;
+        .petal-left {
+            top: 20px;
+            left: calc(50% - 50px);
+            transform: rotate(-45deg);
         }
 
-        .petal-bottom-right {
-            top: -25px;
-            left: 50px;
+        .petal-right {
+            top: 20px;
+            right: calc(50% - 50px);
+            transform: rotate(45deg);
         }
 
         /* Tengah bunga */
         .center {
             position: absolute;
-            top: -40px;
-            left: 10px;
-            width: 20px;
-            height: 20px;
-            background: yellow;
+            top: 40px;
+            left: calc(50% - 15px);
+            width: 30px;
+            height: 30px;
+            background: #ffeb3b;
             border-radius: 50%;
+            opacity: 0;
+            animation: growCenter 3s ease forwards;
+            animation-delay: 2s;
         }
 
-        /* Animasi tumbuh dan goyang */
-        @keyframes grow {
-            0% {
-                height: 0;
-            }
-            100% {
+        /* Animasi batang dan kelopak */
+        @keyframes growStem {
+            to {
                 height: 150px;
             }
         }
 
-        @keyframes sway {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(10px);
+        @keyframes growLeaf {
+            to {
+                opacity: 1;
             }
         }
 
-        audio {
-            display: none;
+        @keyframes growPetal {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes growCenter {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Latar belakang animasi */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+            animation: backgroundGlow 5s infinite alternate;
+        }
+
+        @keyframes backgroundGlow {
+            0% {
+                background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+            }
+            100% {
+                background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
+            }
         }
     </style>
 </head>
 <body>
-    <div id="textContainer" class="typing-container"></div>
+    <!-- Latar belakang -->
+    <div class="background"></div>
 
+    <!-- Teks mengetik -->
+    <div id="text-container" class="typing-text"></div>
+
+    <!-- Bunga -->
     <div class="flower-container">
         <!-- Batang -->
         <div class="stem"></div>
@@ -156,50 +197,53 @@
         <div class="leaf leaf-left"></div>
         <div class="leaf leaf-right"></div>
 
-        <!-- Kelopak dan tengah bunga -->
+        <!-- Kelopak bunga -->
         <div class="petal petal-top"></div>
-        <div class="petal petal-bottom-left"></div>
-        <div class="petal petal-bottom-right"></div>
+        <div class="petal petal-left"></div>
+        <div class="petal petal-right"></div>
+
+        <!-- Tengah bunga -->
         <div class="center"></div>
     </div>
 
+    <!-- Musik -->
     <audio autoplay loop>
-        <source src="background-music.mp3" type="audio/mp3">
+        <source src="musik.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-        // Array teks untuk animasi mengetik
+        // Teks animasi mengetik
         const texts = [
             "Halo sayang apa kabar?",
-            "Maafin aku yah udah ngecewain kamu",
+            "Maafin aku yah udah ngecewain kamu.",
             "Kita baikan yah sayang ❤️",
             "I love you syggg ❤️"
         ];
 
-        let index = 0;
-        const textContainer = document.getElementById("textContainer");
+        let textIndex = 0;
+        const textContainer = document.getElementById('text-container');
 
         function typeText() {
-            textContainer.textContent = ""; // Reset teks
-            const currentText = texts[index];
+            textContainer.innerHTML = ""; // Kosongkan teks sebelumnya
             let charIndex = 0;
 
-            const typing = setInterval(() => {
-                textContainer.textContent += currentText[charIndex];
+            const typeInterval = setInterval(() => {
+                textContainer.innerHTML += texts[textIndex][charIndex];
                 charIndex++;
 
-                if (charIndex === currentText.length) {
-                    clearInterval(typing); // Selesai mengetik
+                if (charIndex === texts[textIndex].length) {
+                    clearInterval(typeInterval);
                     setTimeout(() => {
-                        index = (index + 1) % texts.length; // Pindah ke teks berikutnya
-                        typeText(); // Ketik ulang
-                    }, 2000); // Tunggu sebelum mengetik ulang
+                        textIndex = (textIndex + 1) % texts.length; // Pindah ke teks berikutnya
+                        typeText();
+                    }, 2000); // Tunggu 2 detik sebelum mengetik ulang
                 }
-            }, 100); // Kecepatan mengetik
+            }, 150); // Kecepatan mengetik lebih lambat
         }
 
-        typeText(); // Mulai animasi mengetik
+        // Mulai animasi mengetik
+        typeText();
     </script>
 </body>
 </html>
