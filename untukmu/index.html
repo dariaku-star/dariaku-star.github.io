@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animasi Bunga dan Teks</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
 
+        /* Animasi teks */
+        .typing-container {
+            font-size: 24px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid white;
+            width: 0;
+            animation: typing 4s steps(30) infinite, blink 0.5s step-end infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% {
+                width: 0;
+            }
+            50% {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Area bunga */
+        .flower-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Batang bunga */
+        .stem {
+            position: absolute;
+            width: 10px;
+            height: 150px;
+            background: green;
+            bottom: 0;
+            animation: grow 3s ease-out;
+        }
+
+        /* Daun */
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 40px;
+            background: green;
+            border-radius: 50%;
+        }
+
+        .leaf-left {
+            left: -20px;
+            transform: rotate(-45deg);
+        }
+
+        .leaf-right {
+            right: -20px;
+            transform: rotate(45deg);
+        }
+
+        /* Kelopak bunga */
+        .petal {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: pink;
+            border-radius: 50%;
+            animation: sway 2s infinite alternate;
+        }
+
+        .petal-top {
+            top: -50px;
+            left: 10px;
+        }
+
+        .petal-bottom-left {
+            top: -25px;
+            left: -30px;
+        }
+
+        .petal-bottom-right {
+            top: -25px;
+            left: 50px;
+        }
+
+        /* Tengah bunga */
+        .center {
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background: yellow;
+            border-radius: 50%;
+        }
+
+        /* Animasi tumbuh dan goyang */
+        @keyframes grow {
+            0% {
+                height: 0;
+            }
+            100% {
+                height: 150px;
+            }
+        }
+
+        @keyframes sway {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(10px);
+            }
+        }
+
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="textContainer" class="typing-container"></div>
+
+    <div class="flower-container">
+        <!-- Batang -->
+        <div class="stem"></div>
+
+        <!-- Daun -->
+        <div class="leaf leaf-left"></div>
+        <div class="leaf leaf-right"></div>
+
+        <!-- Kelopak dan tengah bunga -->
+        <div class="petal petal-top"></div>
+        <div class="petal petal-bottom-left"></div>
+        <div class="petal petal-bottom-right"></div>
+        <div class="center"></div>
+    </div>
+
+    <audio autoplay loop>
+        <source src="background-music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Array teks untuk animasi mengetik
+        const texts = [
+            "Halo sayang apa kabar?",
+            "Maafin aku yah udah ngecewain kamu",
+            "Kita baikan yah sayang ❤️",
+            "I love you syggg ❤️"
+        ];
+
+        let index = 0;
+        const textContainer = document.getElementById("textContainer");
+
+        function typeText() {
+            textContainer.textContent = ""; // Reset teks
+            const currentText = texts[index];
+            let charIndex = 0;
+
+            const typing = setInterval(() => {
+                textContainer.textContent += currentText[charIndex];
+                charIndex++;
+
+                if (charIndex === currentText.length) {
+                    clearInterval(typing); // Selesai mengetik
+                    setTimeout(() => {
+                        index = (index + 1) % texts.length; // Pindah ke teks berikutnya
+                        typeText(); // Ketik ulang
+                    }, 2000); // Tunggu sebelum mengetik ulang
+                }
+            }, 100); // Kecepatan mengetik
+        }
+
+        typeText(); // Mulai animasi mengetik
+    </script>
+</body>
+</html>
