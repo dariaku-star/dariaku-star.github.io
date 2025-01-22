@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #111;
+    color: #fff;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+#typing-text {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#heart-button {
+    font-size: 50px;
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#heart-button:hover {
+    transform: scale(1.2);
+}
