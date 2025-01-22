@@ -3,252 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bunga Cinta</title>
+    <title>Bunga untuk Kamu</title>
     <style>
         body {
             margin: 0;
             padding: 0;
+            background: radial-gradient(circle, #001f3f, #000000);
+            overflow: hidden;
             font-family: Arial, sans-serif;
-            background: radial-gradient(circle, #ff7f7f, #001f3f);
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            height: 100vh;
+            flex-direction: column;
+            color: white;
         }
 
-        #love-logo {
-            font-size: 48px;
-            color: #ff4d4d;
+        .container {
             text-align: center;
-            cursor: pointer;
-            animation: bounce 1s infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        .typing-text {
+            font-size: 24px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid white;
+            animation: typing 4s steps(40, end), blink 0.5s step-end infinite alternate;
+            margin-bottom: 20px;
         }
 
-        .flower-container {
-            display: none;
+        .flower {
             position: relative;
-            width: 200px;
-            height: 300px;
-            margin-top: 100px;
+            margin-top: 20px;
+            animation: growFlower 3s ease-in-out forwards;
         }
 
         .stem {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 10px;
-            height: 0;
-            background: #228b22;
-            transform: translateX(-50%);
-            animation: growStem 3s ease forwards;
+            width: 6px;
+            height: 150px;
+            background: #2e8b57;
+            margin: 0 auto;
+            animation: growStem 2s ease-in-out forwards;
         }
 
         .leaf {
-            position: absolute;
             width: 20px;
-            height: 50px;
-            background: #228b22;
+            height: 10px;
+            background: #2e8b57;
             border-radius: 50%;
-            opacity: 0;
-            animation: growLeaf 3s ease forwards;
+            position: absolute;
+            animation: sway 3s infinite alternate ease-in-out;
         }
 
-        .leaf-left {
-            bottom: 100px;
-            left: calc(50% - 30px);
-            transform: rotate(-45deg);
-            animation-delay: 1s;
+        .leaf.left {
+            left: -15px;
+            top: 50%;
+            transform-origin: top right;
         }
 
-        .leaf-right {
-            bottom: 100px;
-            right: calc(50% - 30px);
-            transform: rotate(45deg);
-            animation-delay: 1.5s;
+        .leaf.right {
+            right: -15px;
+            top: 50%;
+            transform-origin: top left;
         }
 
         .petal {
             position: absolute;
-            width: 40px;
-            height: 60px;
-            background: #ff69b4;
+            width: 50px;
+            height: 50px;
+            background: #00ced1;
             border-radius: 50%;
             opacity: 0;
-            animation: growPetal 3s ease forwards, sway 1s infinite alternate;
+            animation: fadeIn 2s ease-in-out forwards;
         }
 
-        .petal-top {
-            top: 0;
-            left: calc(50% - 20px);
+        .petal1 {
+            top: -70px;
+            left: -30px;
         }
 
-        .petal-left {
-            top: 20px;
-            left: calc(50% - 50px);
-            transform: rotate(-45deg);
+        .petal2 {
+            top: -70px;
+            left: 30px;
         }
 
-        .petal-right {
-            top: 20px;
-            right: calc(50% - 50px);
-            transform: rotate(45deg);
+        .petal3 {
+            top: -110px;
+            left: 0;
         }
 
         .center {
-            position: absolute;
-            top: 40px;
-            left: calc(50% - 15px);
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             background: #ffeb3b;
             border-radius: 50%;
+            position: absolute;
+            top: -90px;
+            left: -10px;
             opacity: 0;
-            animation: growCenter 3s ease forwards;
-            animation-delay: 2s;
-        }
-
-        @keyframes growStem {
-            to {
-                height: 150px;
-            }
-        }
-
-        @keyframes growLeaf {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes growPetal {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes growCenter {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes sway {
-            0% {
-                transform: translateX(-5px);
-            }
-            100% {
-                transform: translateX(5px);
-            }
-        }
-
-        .typing-text {
-            display: none;
-            font-size: 24px;
-            color: white;
-            text-align: center;
-            margin-top: 20px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid white;
-            width: 0;
-            animation: typing 5s steps(30, end), blink 0.7s step-end infinite alternate;
+            animation: fadeIn 2s ease-in-out forwards;
         }
 
         @keyframes typing {
-            0% {
+            from {
                 width: 0;
             }
-            50% {
+            to {
                 width: 100%;
             }
         }
 
         @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        @keyframes fadeIn {
             from {
-                border-right-color: white;
+                opacity: 0;
             }
             to {
-                border-right-color: transparent;
+                opacity: 1;
+            }
+        }
+
+        @keyframes growStem {
+            from {
+                height: 0;
+            }
+            to {
+                height: 150px;
+            }
+        }
+
+        @keyframes sway {
+            0% {
+                transform: rotate(-15deg);
+            }
+            100% {
+                transform: rotate(15deg);
+            }
+        }
+
+        @keyframes growFlower {
+            0% {
+                transform: scale(0.8);
+            }
+            100% {
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body>
-    <!-- Logo Love -->
-    <div id="love-logo">❤️ Klik di sini ❤️</div>
-
-    <!-- Bunga -->
-    <div class="flower-container">
-        <div class="stem"></div>
-        <div class="leaf leaf-left"></div>
-        <div class="leaf leaf-right"></div>
-        <div class="petal petal-top"></div>
-        <div class="petal petal-left"></div>
-        <div class="petal petal-right"></div>
-        <div class="center"></div>
+    <div class="container">
+        <div class="typing-text" id="typing"></div>
+        <div class="flower">
+            <div class="stem">
+                <div class="leaf left"></div>
+                <div class="leaf right"></div>
+            </div>
+            <div class="petal petal1"></div>
+            <div class="petal petal2"></div>
+            <div class="petal petal3"></div>
+            <div class="center"></div>
+        </div>
+        <audio autoplay loop>
+            <source src="musik.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
     </div>
-
-    <!-- Teks -->
-    <div id="text-container" class="typing-text"></div>
-
-    <!-- Musik -->
-    <audio id="background-music" loop>
-        <source src="musik.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
     <script>
-        const logo = document.getElementById("love-logo");
-        const flowerContainer = document.querySelector(".flower-container");
-        const music = document.getElementById("background-music");
-        const textContainer = document.getElementById("text-container");
-
         const texts = [
-            "Halo sayang apa kabar?",
-            "Maafin aku yah udah ngecewain kamu.",
+            "Halo sayang apa kabar",
+            "Maafin aku yah udah ngecewain kamu",
             "Kita baikan yah sayang ❤️",
-            "I love you sygg ❤️"
+            "I love you syggg ❤️"
         ];
+        let i = 0;
 
-        let textIndex = 0;
-
-        // Ketika logo diklik
-        logo.addEventListener("click", () => {
-            logo.style.display = "none"; // Hilangkan logo
-            flowerContainer.style.display = "block"; // Tampilkan bunga
-            textContainer.style.display = "block"; // Tampilkan teks
-            music.play(); // Putar musik
-
-            typeText(); // Mulai mengetik
-        });
-
-        // Fungsi mengetik teks
         function typeText() {
-            textContainer.innerHTML = ""; // Kosongkan teks
-            let charIndex = 0;
+            const typingElement = document.getElementById("typing");
+            typingElement.style.animation = "none";
+            typingElement.offsetHeight; // trigger reflow
+            typingElement.style.animation = null;
 
-            const typeInterval = setInterval(() => {
-                textContainer.innerHTML += texts[textIndex][charIndex];
-                charIndex++;
+            typingElement.textContent = texts[i];
+            i = (i + 1) % texts.length;
 
-                if (charIndex === texts[textIndex].length) {
-                    clearInterval(typeInterval);
-                    setTimeout(() => {
-                        textIndex = (textIndex + 1) % texts.length;
-                        typeText();
-                    }, 2000); // Jeda 2 detik
-                }
-            }, 150);
+            setTimeout(typeText, 4000); // Change text every 4 seconds
         }
+
+        typeText();
     </script>
 </body>
 </html>
