@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #002233, #004d40);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+}
+
+.text {
+  font-family: 'Arial', sans-serif;
+  font-size: 2em;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.flower {
+  position: relative;
+  width: 100px;
+  height: 150px;
+  margin: 0 auto;
+  animation: sway 3s infinite alternate ease-in-out;
+}
+
+.stem {
+  position: absolute;
+  bottom: 0;
+  width: 5px;
+  height: 100px;
+  background-color: green;
+  margin: 0 auto;
+}
+
+.petal {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  border-radius: 50%;
+  animation: grow 2s infinite alternate ease-in-out;
+}
+
+.petal1 {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.petal2 {
+  top: 20px;
+  left: 20px;
+}
+
+.petal3 {
+  top: 20px;
+  right: 20px;
+}
+
+.petal4 {
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.falling-petals {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.falling-petals::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 0, 0, 0.5);
+  border-radius: 50%;
+  animation: fall 5s infinite;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
