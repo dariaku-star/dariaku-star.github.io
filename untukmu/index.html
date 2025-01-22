@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hai Nisa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Hai Nisa</h1>
+        <p class="description">Selamat datang di halaman kami. Nikmati musik latar yang menyenangkan!</p>
+        <div class="flower-container">
+            <div class="flower flower1"></div>
+            <div class="flower flower2"></div>
+            <div class="flower flower3"></div>
+        </div>
+        <p class="footer">Template by Deka Tutorial</p>
+    </div>
+    <audio autoplay loop>
+        <source src="your-music.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+</body>
+</html>
+body {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
 
+.container {
+    text-align: center;
+}
+
+.title {
+    font-size: 4em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #fff;
+}
+
+.description {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.flower-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.flower {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: #00a2eb;
+    border-radius: 50%;
+    transform-origin: 50% 100%;
+}
+
+.flower1 {
+    top: 50px;
+    left: 50px;
+}
+
+.flower2 {
+    top: 100px;
+    left: 150px;
+}
+
+.flower3 {
+    top: 150px;
+    left: 100px;
+}
+
+.footer {
+    margin-top: 20px;
+    font-size: 1em;
+}
