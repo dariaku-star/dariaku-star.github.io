@@ -1,1 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunga Cinta</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: radial-gradient(circle, #ff7f7f, #001f3f);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
+        #love-logo {
+            font-size: 48px;
+            color: #ff4d4d;
+            text-align: center;
+            cursor: pointer;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .flower-container {
+            display: none;
+            position: relative;
+            width: 200px;
+            height: 300px;
+            margin-top: 100px;
+        }
+
+        .stem {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 10px;
+            height: 0;
+            background: #228b22;
+            transform: translateX(-50%);
+            animation: growStem 3s ease forwards;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 50px;
+            background: #228b22;
+            border-radius: 50%;
+            opacity: 0;
+            animation: growLeaf 3s ease forwards;
+        }
+
+        .leaf-left {
+            bottom: 100px;
+            left: calc(50% - 30px);
+            transform: rotate(-45deg);
+            animation-delay: 1s;
+        }
+
+        .leaf-right {
+            bottom: 100px;
+            right: calc(50% - 30px);
+            transform: rotate(45deg);
+            animation-delay: 1.5s;
+        }
+
+        .petal {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background: #ff69b4;
+            border-radius: 50%;
+            opacity: 0;
+            animation: growPetal 3s ease forwards, sway 1s infinite alternate;
+        }
+
+        .petal-top {
+            top: 0;
+            left: calc(50% - 20px);
+        }
+
+        .petal-left {
+            top: 20px;
+            left: calc(50% - 50px);
+            transform: rotate(-45deg);
+        }
+
+        .petal-right {
+            top: 20px;
+            right: calc(50% - 50px);
+            transform: rotate(45deg);
+        }
+
+        .center {
+            position: absolute;
+            top: 40px;
+            left: calc(50% - 15px);
+            width: 30px;
+            height: 30px;
+            background: #ffeb3b;
+            border-radius: 50%;
+            opacity: 0;
+            animation: growCenter 3s ease forwards;
+            animation-delay: 2s;
+        }
+
+        @keyframes growStem {
+            to {
+                height: 150px;
+            }
+        }
+
+        @keyframes growLeaf {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes growPetal {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes growCenter {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes sway {
+            0% {
+                transform: translateX(-5px);
+            }
+            100% {
+                transform: translateX(5px);
+            }
+        }
+
+        .typing-text {
+            display: none;
+            font-size: 24px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid white;
+            width: 0;
+            animation: typing 5s steps(30, end), blink 0.7s step-end infinite alternate;
+        }
+
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+            50% {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            from {
+                border-right-color: white;
+            }
+            to {
+                border-right-color: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Love -->
+    <div id="love-logo">❤️ Klik di sini ❤️</div>
+
+    <!-- Bunga -->
+    <div class="flower-container">
+        <div class="stem"></div>
+        <div class="leaf leaf-left"></div>
+        <div class="leaf leaf-right"></div>
+        <div class="petal petal-top"></div>
+        <div class="petal petal-left"></div>
+        <div class="petal petal-right"></div>
+        <div class="center"></div>
+    </div>
+
+    <!-- Teks -->
+    <div id="text-container" class="typing-text"></div>
+
+    <!-- Musik -->
+    <audio id="background-music" loop>
+        <source src="musik.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const logo = document.getElementById("love-logo");
+        const flowerContainer = document.querySelector(".flower-container");
+        const music = document.getElementById("background-music");
+        const textContainer = document.getElementById("text-container");
+
+        const texts = [
+            "Halo sayang apa kabar?",
+            "Maafin aku yah udah ngecewain kamu.",
+            "Kita baikan yah sayang ❤️",
+            "I love you syggg ❤️"
+        ];
+
+        let textIndex = 0;
+
+        // Ketika logo diklik
+        logo.addEventListener("click", () => {
+            logo.style.display = "none"; // Hilangkan logo
+            flowerContainer.style.display = "block"; // Tampilkan bunga
+            textContainer.style.display = "block"; // Tampilkan teks
+            music.play(); // Putar musik
+
+            typeText(); // Mulai mengetik
+        });
+
+        // Fungsi mengetik teks
+        function typeText() {
+            textContainer.innerHTML = ""; // Kosongkan teks
+            let charIndex = 0;
+
+            const typeInterval = setInterval(() => {
+                textContainer.innerHTML += texts[textIndex][charIndex];
+                charIndex++;
+
+                if (charIndex === texts[textIndex].length) {
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        textIndex = (textIndex + 1) % texts.length;
+                        typeText();
+                    }, 2000); // Jeda 2 detik
+                }
+            }, 150);
+        }
+    </script>
+</body>
+</html>
