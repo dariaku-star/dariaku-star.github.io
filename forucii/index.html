@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Untuk Kamu, Sayangku ❤</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff8a8a, #f7b1a2, #fff0c1);
+      background-size: 400% 400%;
+      animation: gradientBackground 10s ease infinite;
+    }
 
+    @keyframes gradientBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 1s ease-in-out;
+      width: 500%; /* Karena ada 5 slide */
+      height: 100vh;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100vh;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Latar belakang setiap slide */
+    .slide:nth-child(1) {
+      background-image: url('foto1.jpg');
+    }
+    .slide:nth-child(2) {
+      background-image: url('foto2.jpg');
+    }
+    .slide:nth-child(3) {
+      background-image: url('foto3.jpg');
+    }
+    .slide:nth-child(4) {
+      background-image: url('foto4.jpg');
+    }
+    .slide:nth-child(5) {
+      background-image: url('foto5.jpg');
+    }
+
+    .photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation: popIn 1s ease-out;
+      z-index: 10; /* Foto tetap di atas */
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 2s ease-out;
+      z-index: 10; /* Teks tetap di atas */
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .nav-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+    .dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.6;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .dot.active {
+      opacity: 1;
+    }
+    .dot:hover {
+      opacity: 0.9;
+    }
+
+    /* Styling untuk tombol play musik */
+    #playMusic {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 20;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="slides">
+      <!-- Slide 1 -->
+      <div class="slide">
+        <img src="foto1.jpg" alt="Foto 1" class="photo">
+        <div class="text-overlay">Hai, Cintaku! ❤</div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="slide">
+        <img src="foto2.jpg" alt="Foto 2" class="photo">
+        <div class="text-overlay">Selamat ulang tahun sayang hehe 💖</div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="slide">
+        <img src="foto3.jpg" alt="Foto 3" class="photo">
+        <div class="text-overlay">Ini ji bisa ku kasih kan ki, btw maaf lama baru jadi susah soalnya syangggg 😘</div>
+      </div>
+      <!-- Slide 4 -->
+      <div class="slide">
+        <img src="foto4.jpg" alt="Foto 4" class="photo">
+        <div class="text-overlay">Cieee selamat panjang umur dan mudah rejekinya syggg, tidak kulupa ji ultah ta syggggku 💕</div>
+      </div>
+      <!-- Slide 5 -->
+      <div class="slide">
+        <img src="foto5.jpg" alt="Foto 5" class="photo">
+        <div class="text-overlay">I Love You! ❤</div>
+      </div>
+    </div>
+    <div class="nav-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- Pemutar Musik (tanpa autoplay agar browser tidak blok) -->
+  <audio id="backgroundMusic" controls loop style="display: none;">
+    <source src="musik-romantis.mp3" type="audio/mp3">
+    Browser Anda tidak mendukung elemen audio.
+  </audio>
+  
+  <!-- Tombol untuk memulai musik -->
+  <button id="playMusic">Play Music</button>
+
+  <script>
+    // Fungsi slide otomatis
+    const slides = document.querySelector('.slides');
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+
+    function changeSlide(index) {
+      currentIndex = index;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => changeSlide(index));
+    });
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % dots.length;
+      changeSlide(currentIndex);
+    }, 5000); // Auto-slide setiap 5 detik
+
+    // Memulai musik saat tombol "Play Music" diklik
+    const playMusicButton = document.getElementById('playMusic');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
+    playMusicButton.addEventListener('click', () => {
+      backgroundMusic.play().then(() => {
+        // Sembunyikan tombol setelah musik mulai diputar
+        playMusicButton.style.display = 'none';
+      }).catch((error) => {
+        console.error("Gagal memutar musik:", error);
+      });
+    });
+  </script>
+</body>
+</html>
