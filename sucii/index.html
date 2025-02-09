@@ -18,11 +18,26 @@
         </div>
     </div>
 
-    <!-- Tambahan untuk musik background -->
-    <audio id="background-music" autoplay loop>
+    <!-- Tambahan untuk musik background dengan autoplay (dimulai dalam keadaan muted) -->
+    <audio id="background-music" autoplay loop muted>
         <source src="musik.mp3" type="audio/mpeg">
         Browser kamu tidak mendukung elemen audio.
     </audio>
+
+    <!-- Script untuk meng-unmute musik setelah interaksi pengguna -->
+    <script>
+        function unmuteAudio() {
+            const audio = document.getElementById('background-music');
+            if (audio.muted) {
+                audio.muted = false;
+                audio.play();
+            }
+            // Hapus event listener setelah interaksi pertama
+            document.removeEventListener('click', unmuteAudio);
+        }
+        // Tambahkan event listener untuk mendeteksi interaksi pengguna (klik)
+        document.addEventListener('click', unmuteAudio);
+    </script>
 
     <script src="script.js"></script>
 </body>
