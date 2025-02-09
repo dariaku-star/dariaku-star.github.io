@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knew you would say yes!</title>
+  <link rel="stylesheet" href="./yes_style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 class="header_text">Knew you would say yes!</h1>
+    <div class="gif_container">
+      <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif" alt="Yes GIF">
+    </div>
+  </div>
+
+  <!-- Elemen audio untuk musik background -->
+  <audio id="background-music" loop>
+    <source src="musik.mp3" type="audio/mpeg" />
+    Browser kamu tidak mendukung elemen audio.
+  </audio>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // Cek apakah musik sebelumnya diaktifkan
+      if (localStorage.getItem('musicPlaying') === 'true') {
+        const audio = document.getElementById('background-music');
+        // Ambil posisi terakhir musik (jika ada)
+        const savedTime = localStorage.getItem('musicTime');
+        if (savedTime !== null) {
+          audio.currentTime = parseFloat(savedTime);
+        }
+        // Mulai putar musik
+        audio.play().then(() => {
+          console.log('Musik dilanjutkan dari posisi: ' + audio.currentTime);
+        }).catch((error) => {
+          console.error('Gagal melanjutkan musik:', error);
+        });
+
+        // Simpan posisi musik secara berkala di halaman ini juga
+        audio.addEventListener('timeupdate', function() {
+          localStorage.setItem('musicTime', audio.currentTime);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
