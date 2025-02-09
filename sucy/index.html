@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* CSS untuk overlay interaksi pengguna */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      color: #fff;
+      font-size: 24px;
+      flex-direction: column;
+    }
+    #overlay button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Overlay untuk meminta interaksi pengguna agar musik dapat diputar -->
+  <div id="overlay">
+    <p>Silakan klik untuk memulai musik</p>
+    <button id="start-btn">Mulai</button>
+  </div>
+
+  <div class="container">
+    <h1>suci sayang rohyd ngak?</h1>
+    <div class="buttons">
+      <!-- Perhatikan: tombol ini memanggil fungsi handleYesClick() -->
+      <button class="yes-button" onclick="handleYesClick()">Yes</button>
+      <button class="no-button" onclick="handleNoClick()">No</button>
+    </div>
+    <div class="gif_container">
+      <img
+        src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif"
+        alt="Cute GIF" />
+    </div>
+  </div>
+
+  <!-- Elemen audio untuk musik background -->
+  <audio id="background-music" loop>
+    <source src="musik.mp3" type="audio/mpeg" />
+    Browser kamu tidak mendukung elemen audio.
+  </audio>
+
+  <!-- Script untuk memulai musik saat overlay diklik -->
+  <script>
+    document.getElementById('start-btn').addEventListener('click', function () {
+      const audio = document.getElementById('background-music');
+      audio
+        .play()
+        .then(() => {
+          // Setelah musik berhasil diputar, sembunyikan overlay
+          document.getElementById('overlay').style.display = 'none';
+        })
+        .catch((error) => {
+          console.error('Gagal memulai musik:', error);
+        });
+    });
+  </script>
+
+  <!-- Misalnya, script.js sudah berisi fungsi handleYesClick() dan handleNoClick() -->
+  <script src="script.js"></script>
+
+  <!-- Override fungsi handleYesClick() agar musik tetap diputar setelah tombol Yes diklik -->
+  <script>
+    // Simpan referensi fungsi handleYesClick asli jika sudah didefinisikan
+    const originalHandleYesClick =
+      typeof window.handleYesClick === 'function' ? window.handleYesClick : function () {};
+
+    // Override fungsi handleYesClick
+    window.handleYesClick = function () {
+      // Panggil fungsi asli
+      originalHandleYesClick();
+
+      // Jika aksi di dalam fungsi asli tidak menyebabkan reload/navigasi, pastikan musik tetap diputar
+      setTimeout(() => {
+        const audio = document.getElementById('background-music');
+        // Jika musik berhenti, coba putar kembali
+        if (audio && audio.paused) {
+          audio.play().catch((error) =>
+            console.error('Error memulai ulang musik setelah klik Yes:', error)
+          );
+        }
+      }, 200); // delay 200ms agar memberi waktu aksi asli selesai
+    };
+  </script>
+</body>
+</html>
