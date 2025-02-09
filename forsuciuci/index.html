@@ -1,1 +1,80 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suci sayang rohyd ngak?</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Tambahan CSS untuk overlay tombol Mulai */
+    #startOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #startOverlay button {
+      padding: 20px 40px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Suci sayang rohyd ngak?</h1>
+    <div class="buttons">
+      <button class="yes-button" onclick="handleYesClick()">Yes</button>
+      <button class="no-button" onclick="handleNoClick()">No</button>
+    </div>
+    <div class="gif_container">
+      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+    </div>
+  </div>
+  
+  <!-- Tambahan: Elemen audio untuk musik latar -->
+  <!-- Ganti "your-music-file.mp3" dengan path file musik yang diinginkan -->
+  <audio id="bg-music" preload="auto" src="your-music-file.mp3"></audio>
+  
+  <!-- Tambahan: Overlay dengan tombol Mulai -->
+  <div id="startOverlay">
+    <button id="startButton">Mulai</button>
+  </div>
+  
+  <script src="script.js"></script>
+  <script>
+    // Fungsi untuk memulai musik dan mengalihkan ke halaman kedua
+    document.getElementById("startButton").addEventListener("click", function() {
+      var audio = document.getElementById("bg-music");
+      audio.play().then(function() {
+        // Setelah 1 detik, simpan posisi musik dan alihkan ke halaman kedua
+        setTimeout(function(){
+          sessionStorage.setItem("musicTime", audio.currentTime);
+          // Misalnya, halaman kedua bernama "yes.html"
+          window.location.href = "yes.html";
+        }, 1000);
+      }).catch(function(error) {
+        console.log("Gagal memulai pemutaran audio:", error);
+      });
+    });
+    
+    // Jika pengguna memilih tombol Yes, simpan posisi musik sebelum pindah
+    function handleYesClick() {
+      var audio = document.getElementById("bg-music");
+      sessionStorage.setItem("musicTime", audio.currentTime);
+      window.location.href = "yes.html";
+    }
+    
+    // Fungsi untuk tombol No (sesuaikan tindakannya sesuai kebutuhan)
+    function handleNoClick() {
+      alert("Maybe next time!");
+    }
+  </script>
+</body>
+</html>
