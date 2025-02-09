@@ -1,1 +1,68 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Suci sayang rohyd ngak?</h1>
+    <div class="buttons">
+      <button class="yes-button" onclick="handleYesClick()">Yes</button>
+      <button class="no-button" onclick="handleNoClick()">No</button>
+    </div>
+    <div class="gif_container">
+      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+    </div>
+  </div>
+  
+  <!-- Audio element tanpa atribut controls agar tidak terlihat (musik hanya diatur melalui script) -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <!-- Overlay tombol "Mulai" yang muncul saat halaman pertama dimuat -->
+  <div id="startOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+    <button id="startButton" style="padding: 20px 40px; font-size: 24px; cursor: pointer;">Mulai</button>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var audio = document.getElementById('bgMusic');
+      
+      // Jika ada posisi musik tersimpan di sessionStorage, atur currentTime
+      var savedTime = sessionStorage.getItem('audioTime');
+      if (savedTime) {
+        audio.currentTime = parseFloat(savedTime);
+      }
+      
+      // Saat tombol "Mulai" diklik, mulai putar musik dan sembunyikan overlay
+      document.getElementById('startButton').addEventListener('click', function() {
+        audio.play().then(function() {
+          document.getElementById('startOverlay').style.display = 'none';
+        }).catch(function(error) {
+          console.error("Gagal memulai musik:", error);
+        });
+      });
+      
+      // Simpan posisi currentTime musik setiap ada pembaruan
+      audio.addEventListener('timeupdate', function() {
+        sessionStorage.setItem('audioTime', audio.currentTime);
+      });
+    });
+    
+    function handleYesClick() {
+      // Navigasi ke halaman Yes; posisi musik disimpan sehingga pada halaman berikutnya dapat dilanjutkan
+      window.location.href = 'yes_page.html';
+    }
+    
+    function handleNoClick() {
+      alert("Maybe next time!");
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
