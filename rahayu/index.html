@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suci sayang rohyd ngak?</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Suci sayang rohyd ngak?</h1>
+    <div class="buttons">
+      <button class="yes-button" onclick="handleYesClick()">Yes</button>
+      <button class="no-button" onclick="handleNoClick()">No</button>
+    </div>
+    <div class="gif_container">
+      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+    </div>
+  </div>
 
+  <!-- Tombol untuk memulai musik -->
+  <div class="music-controls">
+    <button id="startButton" onclick="startMusic()">Mulai Musik</button>
+  </div>
+
+  <!-- Elemen audio -->
+  <audio id="bgMusic" src="./music.mp3" preload="auto"></audio>
+
+  <script>
+    // Fungsi untuk memulai musik setelah interaksi pengguna
+    function startMusic() {
+      var audio = document.getElementById("bgMusic");
+      audio.muted = false; // pastikan audio tidak dalam keadaan mute
+      audio.play().then(function() {
+        console.log("Musik telah dimulai.");
+      }).catch(function(error) {
+        console.error("Error memulai musik:", error);
+        alert("Gagal memulai musik. Silakan periksa file musik atau konsol error untuk info lebih lanjut.");
+      });
+    }
+
+    // Fungsi untuk menangani tombol Yes
+    function handleYesClick() {
+      var audio = document.getElementById("bgMusic");
+      // Simpan posisi musik saat ini di localStorage
+      localStorage.setItem("musicTime", audio.currentTime);
+      // Pindah ke halaman selanjutnya (yes.html)
+      window.location.href = "yes.html";
+    }
+
+    // Fungsi untuk menangani tombol No (contoh aksi)
+    function handleNoClick() {
+      alert("Mungkin lain kali!");
+    }
+  </script>
+</body>
+</html>
