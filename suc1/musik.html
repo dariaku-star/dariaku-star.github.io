@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Autoplay Musik dengan JavaScript</title>
+</head>
+<body>
+  <h1>Autoplay Musik (Perlu Interaksi Pengguna di Beberapa Browser)</h1>
+
+  <script>
+    const audio = new Audio('music.mp3');
+
+    // Mencoba memulai pemutaran secara otomatis
+    audio.play().catch(error => {
+      console.warn('Autoplay gagal, pengguna perlu memulai musik secara manual:', error);
+      // Anda bisa menampilkan tombol play atau instruksi kepada pengguna
+    });
+  </script>
+</body>
+</html>
