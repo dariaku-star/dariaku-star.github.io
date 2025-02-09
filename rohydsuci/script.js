@@ -1,39 +1,27 @@
-// Buat objek audio untuk musik
-const bgMusic = new Audio('musik.mp3');
-bgMusic.loop = true;      // Musik akan diputar berulang
-bgMusic.volume = 0.5;     // Atur volume (opsional)
-let musicStarted = false;
+const messages = [
+    "Are you sure?",
+    "Really sure??",
+    "Are you positive?",
+    "Pookie please...",
+    "Just think about it!",
+    "If you say no, I will be really sad...",
+    "I will be very sad...",
+    "I will be very very very sad...",
+    "Ok fine, I will stop asking...",
+    "Just kidding, say yes please! ❤️"
+];
 
-// Fungsi untuk memulai musik (hanya dijalankan sekali)
-function startMusic() {
-    if (!musicStarted) {
-        bgMusic.play().then(() => {
-            musicStarted = true;
-        }).catch((error) => {
-            console.error("Gagal memulai musik:", error);
-        });
-    }
-}
+let messageIndex = 0;
 
-// Mulai musik ketika pengguna pertama kali melakukan klik (agar sesuai aturan autoplay browser)
-document.addEventListener('click', startMusic, { once: true });
-
-// Update posisi musik di localStorage setiap 1 detik
-setInterval(() => {
-    if (musicStarted && !bgMusic.paused) {
-        localStorage.setItem('musicTime', bgMusic.currentTime);
-    }
-}, 1000);
-
-// Fungsi yang dipanggil saat tombol Yes diklik
-function handleYesClick() {
-    // Simpan posisi musik saat ini sebelum berpindah halaman
-    localStorage.setItem('musicTime', bgMusic.currentTime);
-    // Arahkan ke halaman kedua (misalnya, yes.html)
-    window.location.href = 'yes.html';
-}
-
-// Fungsi yang dipanggil saat tombol No diklik (opsional: Anda bisa menambahkan aksi lain)
 function handleNoClick() {
-    bgMusic.pause();
+    const noButton = document.querySelector('.no-button');
+    const yesButton = document.querySelector('.yes-button');
+    noButton.textContent = messages[messageIndex];
+    messageIndex = (messageIndex + 1) % messages.length;
+    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+    yesButton.style.fontSize = `${currentSize * 1.5}px`;
+}
+
+function handleYesClick() {
+    window.location.href = "yes_page.html";
 }
